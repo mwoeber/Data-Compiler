@@ -13,13 +13,13 @@ using System.Text.RegularExpressions;
 
 namespace Data_Compiler
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         String fileName = null;
         StreamReader reader = null;
         int __progress = 0;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -124,7 +124,7 @@ namespace Data_Compiler
             SetButtonEnable(true);
         }
 
-        private void SetButtonEnable(bool text)
+        public void SetButtonEnable(bool text)
         {
             if (InvokeRequired)
             {
@@ -137,6 +137,18 @@ namespace Data_Compiler
         private void UpdateProgressBar()
         {
             progressBar1.Value = __progress;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void prefrencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetButtonEnable(false);
+            Form2 preference = new Form2(this);
+            preference.Show();
         }
     }
 }
