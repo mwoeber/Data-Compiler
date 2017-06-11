@@ -75,9 +75,9 @@ namespace Data_Compiler
 
             _Workbook workbooksExcel = docExcel.Workbooks.Add();
             _Worksheet worksheetExcel = (_Worksheet)workbooksExcel.ActiveSheet;
-
-            var rng_ = ((Range)worksheetExcel.Range[worksheetExcel.Cells[1, 1], worksheetExcel.Cells[1, 17]]);
-            rng_.Value = new string[,] { { "Source Code", "", "", "", "", "", "", "ORD DATE", "COPIES", "GROSS VALUE", "NET VALUE", "GROSS RE PER COP", "NET REV. PER COPY", "GROSS REVENUE", "NET REVENUE", "TOTAL" } };
+            int columnCount = 18;
+            var rng_ = ((Range)worksheetExcel.Range[worksheetExcel.Cells[1, 1], worksheetExcel.Cells[1, columnCount]]);
+            rng_.Value = new string[,] { { "Source Code", "", "", "", "", "", "", "ORD DATE","TERM", "COPIES", "GROSS VALUE", "NET VALUE", "GROSS REV PER COPY", "NET REV. PER COPY", "GROSS REVENUE", "NET REVENUE", "TOTAL", "MODEL" } };
 
             int count = 1;
 
@@ -89,14 +89,14 @@ namespace Data_Compiler
                 String line = reader.ReadLine().Trim();
                 String[] array = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (array.Length > 0 && array[0].Any(char.IsDigit) && array[0].Trim() != "")
+                if (array.Length > 0 && array.Length == 11 && array[0].Trim() != "")
                 {
                     if (array[0].Length == 6 || (array[0].Length == 5 && array[0].Substring(0, 1) == "Z"))
                     {
                         count++;
 
-                        var rng = ((Range)worksheetExcel.Range[worksheetExcel.Cells[count, 1], worksheetExcel.Cells[count, 17]]);
-                        rng.Value = new string[,] { { array[0], array[0].Substring(0, 1), array[0].Substring(1, 1), array[0].Substring(2, 1), array[0].Substring(3, 1), array[0].Substring(4, 1), (array[0].Length == 6 ? array[0].Substring(5, 1) : ""), array[1], array[2], array[3], array[4], array[5], array[6], array[7], array[8], array[9], array[10] } };
+                        var rng = ((Range)worksheetExcel.Range[worksheetExcel.Cells[count, 1], worksheetExcel.Cells[count, columnCount]]);
+                        rng.Value = new string[,] { { array[0], array[0].Substring(0, 1), array[0].Substring(1, 1), array[0].Substring(2, 1), array[0].Substring(3, 1), array[0].Substring(4, 1), (array[0].Length == 6 ? array[0].Substring(5, 1) : ""), array[1], array[2], array[3], array[4], array[5], array[6], array[7], array[8], array[9], array[10], "HEllo" } };
 
                     }
                 }
@@ -149,6 +149,11 @@ namespace Data_Compiler
             SetButtonEnable(false);
             Form2 preference = new Form2(this);
             preference.Show();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
